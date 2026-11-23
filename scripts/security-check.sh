@@ -1,3 +1,4 @@
+
 #!/usr/bin/env bash
 # security-check.sh – basic security baseline check for a Linux server.
 # Read-only: reports findings with PASS / WARN / FAIL and a final score.
@@ -92,7 +93,7 @@ if [[ $(stat -c '%A' /tmp) == *t ]]; then pass "/tmp has sticky bit"; else fail 
 
 # --- 5. Dangerous files --------------------------------------------------------
 section "World-writable and SUID files"
-ww=$(find /etc /usr/local /opt -xdev -type f -perm -0002 2>/dev/null | head -20)
+ww=$(find /etc /usr/local /opt -xdev -type f -perm -0002 2>/dev/null | head -20 || true)
 if [[ -z $ww ]]; then
   pass "No world-writable files in /etc, /usr/local, /opt"
 else
