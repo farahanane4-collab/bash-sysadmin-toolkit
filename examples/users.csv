@@ -1,0 +1,6 @@
+username,full_name,groups,action
+mmuster,Max Mustermann,developers;docker,create
+eschmidt,Erika Schmidt,developers,create
+# Offboarding
+jdoe,John Doe,,lock
+oldintern,Old Intern,,delete

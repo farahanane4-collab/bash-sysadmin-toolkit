@@ -1,0 +1,14 @@
+# Beispiel-Crontab (sudo crontab -e) – Pfade an die eigene Installation anpassen.
+# m  h  dom mon dow  command
+
+# Alle 5 Minuten Systemzustand prüfen, nur Warnungen ins Syslog schreiben
+*/5 *  *   *   *    /opt/bash-sysadmin-toolkit/scripts/system-health.sh -q -w 80 -c 90 || logger -t system-health "$(/opt/bash-sysadmin-toolkit/scripts/system-health.sh -q)"
+
+# Täglich 02:30 Uhr: Backup von /etc, 14 Versionen behalten
+30 2  *   *   *    /opt/bash-sysadmin-toolkit/scripts/backup.sh -n etc -k 14 -d /var/backups/toolkit /etc >> /var/log/toolkit-backup.log 2>&1
+
+# Sonntags 03:00 Uhr: Backups verifizieren
+0  3  *   *   0    /opt/bash-sysadmin-toolkit/scripts/backup.sh --verify -d /var/backups/toolkit >> /var/log/toolkit-backup.log 2>&1
+
+# Montags 07:00 Uhr: Sicherheits- und Benutzer-Audit per Mail an das IT-Team
+0  7  *   *   1    { /opt/bash-sysadmin-toolkit/scripts/security-check.sh; /opt/bash-sysadmin-toolkit/scripts/user-audit.sh; } 2>&1 | mail -s "Wochenaudit $(hostname)" it-team@example.org
