@@ -1,5 +1,4 @@
 
-#!/usr/bin/env bash
 # security-check.sh – basic security baseline check for a Linux server.
 # Read-only: reports findings with PASS / WARN / FAIL and a final score.
 # Checks: SSH config, firewall, pending updates, critical file permissions,
